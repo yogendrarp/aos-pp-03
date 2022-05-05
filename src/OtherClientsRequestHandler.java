@@ -39,6 +39,9 @@ public class OtherClientsRequestHandler implements Runnable {
                 System.out.println(new String(line));
                 String[] messageTokens = new String(line).split("#");
                 // Handle enquiry, send hosted file information
+                if(messageTokens[0].equals("ENQUIRY")){
+                    System.out.println("Enquiry is received");
+                }
                 if (messageTokens[0].equals("WRITE")) {
                     Message msg = new Message();
                     msg.type = "WRITE";

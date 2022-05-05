@@ -1,8 +1,5 @@
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -25,11 +22,15 @@ public class Client {
 
         //server will listen to incoming requests
         ServerSocket server = null;
+
         ClockComparator clockComparator = new ClockComparator();
         if (args.length < 1) {
             System.out.println("Need client id ex 1");
             System.exit(-1);
         }
+        System.out.println("Sleeping for 5 seconds to ensure all clients are up!");
+        Thread.sleep(5000);
+
         int clientId = Integer.parseInt(args[0]);
         Configurations configurations = ConfigManager.getConfigurations(clientId);
 
@@ -55,8 +56,10 @@ public class Client {
             String msg = "ENQUIRE";
             Quorum quorum = fileQuorums.get(randomIndex);
             ObtainBothQuorum obtainBothQuorum=new ObtainBothQuorum(msg,clients,lamportsClock.clockValue,quorum);
+            if(quorum.vote1 && quorum.vote2){
+               System.out.println("Obtained locks, proceed to 2 PL");
+            }
         }
-
 
         while (true) {
             System.out.println("I will be waiting, till thread stops listening, press ctrl+c to quit");
