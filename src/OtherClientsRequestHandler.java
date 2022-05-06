@@ -50,9 +50,9 @@ public class OtherClientsRequestHandler implements Runnable {
                 System.out.println(new String(line));
                 String[] messageTokens = new String(line).split("#");
                 String msgType = messageTokens[0];
-                String clientId = messageTokens[1];
-                char clientIdChar = clientId.charAt(0);
-                int clientIdx = Integer.parseInt(clientId);
+                String _sclientId = messageTokens[1];
+                char clientIdChar = _sclientId.charAt(0);
+                int clientIdx = Integer.parseInt(_sclientId);
                 String fileName = messageTokens[2];
                 int number = Integer.parseInt(fileName.replaceAll("[^\\d]", " ").trim());
                 // Handle enquiry, send hosted file information
@@ -77,9 +77,13 @@ public class OtherClientsRequestHandler implements Runnable {
                 }
                 if (msgType.equals("YIELD")) {
                     //then from your quorum set remove the locks obtained.
-                    for(int i=0;i<fileQuorums.size();i++){
-                        if(fileQuorums.get(i).fileName.equals(fileName)){
-
+                    for (int i = 0; i < fileQuorums.size(); i++) {
+                        if (fileQuorums.get(i).fileName.equals(fileName)) {
+                            if (dirtyLogic(clientId, clientIdx) == 1) {
+                                fileQuorums.get(i).vote1 = false;
+                            } else if (dirtyLogic(clientId, clientIdx) == 2) {
+                                fileQuorums.get(i).vote2 = false;
+                            }
                         }
                     }
                 }
@@ -114,5 +118,41 @@ public class OtherClientsRequestHandler implements Runnable {
             index++;
         }
         return -1;
+    }
+
+    private int dirtyLogic(int clientId, int otherId) {
+        switch (clientId) {
+            case 1:
+                if (otherId == 2) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            case 2:
+                if (otherId == 3) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            case 3:
+                if (otherId == 4) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            case 4:
+                if (otherId == 5) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+            case 5:
+                if (otherId == 1) {
+                    return 1;
+                } else {
+                    return 2;
+                }
+        }
+        return 0;
     }
 }
