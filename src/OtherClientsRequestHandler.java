@@ -72,6 +72,9 @@ public class OtherClientsRequestHandler implements Runnable {
                         String yieldMsg = "YIELD#" + clientId + "#" + fileName;
                         outSendYield.writeLong(yieldMsg.length());
                         outSendYield.writeBytes(yieldMsg);
+                        Thread.sleep(2000);
+                        out.writeLong(5);
+                        out.writeBytes("REPLY");
                     } catch (Exception e) {
                     }
                 }

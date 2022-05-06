@@ -6,8 +6,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Client {
-
-    Configurations configurations;
     static ArrayList<String> files = new ArrayList<>(Arrays.asList("F1.txt", "F2.txt", "F3.txt", "F4.txt", "F5.txt", "F6.txt", "F7.txt", "F8.txt"));
     static Character[] votes = new Character[]{'0', '0', '0', '0', '0', '0', '0', '0'};
     static String[] servers;
@@ -33,7 +31,7 @@ public class Client {
         Thread.sleep(5000);
 
         int clientId = Integer.parseInt(args[0]);
-        Configurations configurations = ConfigManager.getConfigurations(clientId);
+        Configurations configurations = ConfigManager.getClientConfigurations(clientId);
 
         servers = configurations.devServers;
         clients = configurations.devClients;
