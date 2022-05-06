@@ -9,6 +9,7 @@ public class Client {
 
     Configurations configurations;
     static ArrayList<String> files = new ArrayList<>(Arrays.asList("F1.txt", "F2.txt", "F3.txt", "F4.txt", "F5.txt", "F6.txt", "F7.txt", "F8.txt"));
+    static Character[] votes = new Character[]{'0', '0', '0', '0', '0', '0', '0', '0'};
     static String[] servers;
     static String[] clients;
     static ArrayList<Quorum> fileQuorums = new ArrayList<Quorum>();
@@ -34,8 +35,8 @@ public class Client {
         int clientId = Integer.parseInt(args[0]);
         Configurations configurations = ConfigManager.getConfigurations(clientId);
 
-        servers=configurations.devServers;
-        clients=configurations.devClients;
+        servers = configurations.devServers;
+        clients = configurations.devClients;
 
         List<String> cities = Files.readAllLines(Paths.get(path + citiesFile));
         for (int i = 0; i < files.size(); i++) {
@@ -45,7 +46,7 @@ public class Client {
         int filesSize = files.size();
         String filesInfo = files.stream().map(Object::toString).collect(Collectors.joining(","));
         System.out.println("Before listening");
-        ServerOfClient serverOfClient = new ServerOfClient(filesInfo, server, requestQueues, lamportsClock, requests, path, configurations);
+        ServerOfClient serverOfClient = new ServerOfClient(filesInfo, server, requestQueues, lamportsClock, requests, path, configurations, votes);
         Thread serverThread = new Thread(serverOfClient);
         serverThread.start();
         System.out.println("After listening");
@@ -53,17 +54,13 @@ public class Client {
             int randomIndex = new Random().nextInt((filesSize));
             int randomCityIndex = new Random().nextInt(cities.size() - 1);
             String randomCity = cities.get(randomCityIndex);
-            String msg = "ENQUIRE";
+            String msg = "ENQUIRE#" + clientId + "#" + files.get(randomIndex);
             Quorum quorum = fileQuorums.get(randomIndex);
-            ObtainBothQuorum obtainBothQuorum=new ObtainBothQuorum(msg,clients,lamportsClock.clockValue,quorum);
-            if(quorum.vote1 && quorum.vote2){
-               System.out.println("Obtained locks, proceed to 2 PL");
+            ObtainBothQuorum obtainBothQuorum = new ObtainBothQuorum(msg, clients, lamportsClock.clockValue, quorum);
+            obtainBothQuorum.obtain();
+            if (quorum.vote1 && quorum.vote2) {
+                System.out.println("Obtained locks, proceed to 2 PL");
             }
-        }
-
-        while (true) {
-            System.out.println("I will be waiting, till thread stops listening, press ctrl+c to quit");
-            Thread.sleep(3000);
         }
     }
 
