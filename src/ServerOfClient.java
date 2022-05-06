@@ -14,9 +14,14 @@ public class ServerOfClient implements Runnable {
     String path;
     Configurations configurations;
     Character[] votes;
+    int clientId;
+    ArrayList<Quorum> fileQuorums;
+
 
     public ServerOfClient(String filesInfo, ServerSocket server, ArrayList<PriorityQueue<Message>> requestQueues,
-                          LamportsClock lamportsClock, HashSet<String> requests, String path, Configurations configurations,Character[] votes) {
+                          LamportsClock lamportsClock, HashSet<String> requests, String path,
+                          Configurations configurations, Character[] votes, int clientId,
+                          ArrayList<Quorum> fileQuorums) {
         this.filesInfo = filesInfo;
         this.server = server;
         this.requestQueues = requestQueues;
@@ -24,7 +29,9 @@ public class ServerOfClient implements Runnable {
         this.requests = requests;
         this.path = path;
         this.configurations = configurations;
-        this.votes=votes;
+        this.votes = votes;
+        this.clientId = clientId;
+        this.fileQuorums = fileQuorums;
     }
 
     public void run() {
@@ -34,7 +41,9 @@ public class ServerOfClient implements Runnable {
             server.setReuseAddress(true);
             while (true) {
                 Socket client = server.accept();
-                OtherClientsRequestHandler clientHandler = new OtherClientsRequestHandler(client, requestQueues, filesInfo, lamportsClock, requests, path, votes, configurations);
+                OtherClientsRequestHandler clientHandler = new OtherClientsRequestHandler(client, requestQueues,
+                        filesInfo, lamportsClock, requests, path,
+                        votes, configurations, clientId, fileQuorums);
                 new Thread(clientHandler).start();
                 Thread.sleep(1000);
             }

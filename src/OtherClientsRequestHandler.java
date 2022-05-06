@@ -16,8 +16,13 @@ public class OtherClientsRequestHandler implements Runnable {
     private final String path;
     Character[] votes;
     Configurations configurations;
+    int clientId;
+    ArrayList<Quorum> fileQuorums;
 
-    public OtherClientsRequestHandler(Socket socket, ArrayList<PriorityQueue<Message>> queue, String filesInfo, LamportsClock lamportsClock, HashSet<String> requests, String path, Character[] votes, Configurations configurations) {
+    public OtherClientsRequestHandler(Socket socket, ArrayList<PriorityQueue<Message>> queue, String filesInfo,
+                                      LamportsClock lamportsClock, HashSet<String> requests, String path,
+                                      Character[] votes, Configurations configurations,
+                                      int clientId, ArrayList<Quorum> fileQuorums) {
         this.clientSocket = socket;
         this.requestQueues = queue;
         this.filesInfo = filesInfo;
@@ -26,6 +31,8 @@ public class OtherClientsRequestHandler implements Runnable {
         this.path = path;
         this.votes = votes;
         this.configurations = configurations;
+        this.clientId = clientId;
+        this.fileQuorums = fileQuorums;
     }
 
     public void run() {
@@ -44,23 +51,37 @@ public class OtherClientsRequestHandler implements Runnable {
                 String[] messageTokens = new String(line).split("#");
                 String msgType = messageTokens[0];
                 String clientId = messageTokens[1];
-                Character clientIdChar = clientId.charAt(0);
-                Integer clientIdx = Integer.parseInt(clientId);
+                char clientIdChar = clientId.charAt(0);
+                int clientIdx = Integer.parseInt(clientId);
                 String fileName = messageTokens[2];
                 int number = Integer.parseInt(fileName.replaceAll("[^\\d]", " ").trim());
                 // Handle enquiry, send hosted file information
-                if (messageTokens[0].equals("ENQUIRY") && votes[number - 1] == '0') {
+                if (msgType.equals("ENQUIRY") && votes[number - 1] == '0') {
                     System.out.println("Giving vote");
                     votes[number - 1] = clientIdChar;
                     out.writeLong(5);
-                    out.writeBytes("VOTED");
+                    out.writeBytes("REPLY");
                 } else {
-                    //Send yeild message to who you have voted
+                    //Send yield message to who you have voted
                     String clientInfo = configurations.allDevClients[clientIdx - 1];
-
+                    String server = clientInfo.split(":")[0];
+                    int port = Integer.parseInt(clientInfo.split(":")[1]);
+                    try (Socket yieldSocket = new Socket(server, port)) {
+                        DataOutputStream outSendYield = new DataOutputStream(yieldSocket.getOutputStream());
+                        DataInputStream inSendYield = new DataInputStream(yieldSocket.getInputStream());
+                        String yieldMsg = "YIELD#" + clientId + "#" + fileName;
+                        outSendYield.writeLong(yieldMsg.length());
+                        outSendYield.writeBytes(yieldMsg);
+                    } catch (Exception e) {
+                    }
                 }
-                if (messageTokens[0].equals("YIELD")) {
+                if (msgType.equals("YIELD")) {
                     //then from your quorum set remove the locks obtained.
+                    for(int i=0;i<fileQuorums.size();i++){
+                        if(fileQuorums.get(i).fileName.equals(fileName)){
+
+                        }
+                    }
                 }
             }
         } catch (IOException e) {

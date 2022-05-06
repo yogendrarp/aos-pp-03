@@ -46,7 +46,7 @@ public class Client {
         int filesSize = files.size();
         String filesInfo = files.stream().map(Object::toString).collect(Collectors.joining(","));
         System.out.println("Before listening");
-        ServerOfClient serverOfClient = new ServerOfClient(filesInfo, server, requestQueues, lamportsClock, requests, path, configurations, votes);
+        ServerOfClient serverOfClient = new ServerOfClient(filesInfo, server, requestQueues, lamportsClock, requests, path, configurations, votes, clientId, fileQuorums);
         Thread serverThread = new Thread(serverOfClient);
         serverThread.start();
         System.out.println("After listening");
