@@ -4,4 +4,6 @@ public class Configurations {
     String[] devClients;
     String[] prodServers;
     String[] devServers;
+    String[] allDevClients;
+    String[] allProdClients;
 }

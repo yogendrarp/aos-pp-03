@@ -15,8 +15,9 @@ public class OtherClientsRequestHandler implements Runnable {
     private final HashSet<String> requests;
     private final String path;
     Character[] votes;
+    Configurations configurations;
 
-    public OtherClientsRequestHandler(Socket socket, ArrayList<PriorityQueue<Message>> queue, String filesInfo, LamportsClock lamportsClock, HashSet<String> requests, String path, Character[] votes) {
+    public OtherClientsRequestHandler(Socket socket, ArrayList<PriorityQueue<Message>> queue, String filesInfo, LamportsClock lamportsClock, HashSet<String> requests, String path, Character[] votes, Configurations configurations) {
         this.clientSocket = socket;
         this.requestQueues = queue;
         this.filesInfo = filesInfo;
@@ -24,6 +25,7 @@ public class OtherClientsRequestHandler implements Runnable {
         this.requests = requests;
         this.path = path;
         this.votes = votes;
+        this.configurations = configurations;
     }
 
     public void run() {
@@ -43,6 +45,7 @@ public class OtherClientsRequestHandler implements Runnable {
                 String msgType = messageTokens[0];
                 String clientId = messageTokens[1];
                 Character clientIdChar = clientId.charAt(0);
+                Integer clientIdx = Integer.parseInt(clientId);
                 String fileName = messageTokens[2];
                 int number = Integer.parseInt(fileName.replaceAll("[^\\d]", " ").trim());
                 // Handle enquiry, send hosted file information
@@ -51,13 +54,13 @@ public class OtherClientsRequestHandler implements Runnable {
                     votes[number - 1] = clientIdChar;
                     out.writeLong(5);
                     out.writeBytes("VOTED");
+                } else {
+                    //Send yeild message to who you have voted
+                    String clientInfo = configurations.allDevClients[clientIdx - 1];
+
                 }
-                else{
-
-
-                }
-                if(messageTokens[0].equals("YIELD")){
-
+                if (messageTokens[0].equals("YIELD")) {
+                    //then from your quorum set remove the locks obtained.
                 }
             }
         } catch (IOException e) {

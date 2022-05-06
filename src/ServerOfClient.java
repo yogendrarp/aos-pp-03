@@ -34,7 +34,7 @@ public class ServerOfClient implements Runnable {
             server.setReuseAddress(true);
             while (true) {
                 Socket client = server.accept();
-                OtherClientsRequestHandler clientHandler = new OtherClientsRequestHandler(client, requestQueues, filesInfo, lamportsClock, requests, path, votes);
+                OtherClientsRequestHandler clientHandler = new OtherClientsRequestHandler(client, requestQueues, filesInfo, lamportsClock, requests, path, votes, configurations);
                 new Thread(clientHandler).start();
                 Thread.sleep(1000);
             }
