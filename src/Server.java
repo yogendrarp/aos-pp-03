@@ -2,7 +2,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 
-public class Server1 {
+public class Server {
 
 
     public static void main(String[] args) {
@@ -13,6 +13,7 @@ public class Server1 {
         int serverId = Integer.parseInt(args[0]);
         ServerConfigurations serverConfigurations = ConfigManager.getServerConfiguration(serverId);
         try (ServerSocket server = new ServerSocket(serverConfigurations.devServerPort)) {
+            System.out.println("Server " + serverId + " listening on " + serverConfigurations.devServerPort);
             while (true) {
                 Socket client = server.accept();
                 ClientHandler clientHandler = new ClientHandler(client, serverConfigurations.devPath);
