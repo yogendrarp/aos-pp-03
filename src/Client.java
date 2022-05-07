@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -27,8 +28,6 @@ public class Client {
             System.out.println("Need client id ex 1");
             System.exit(-1);
         }
-        System.out.println("Sleeping for 5 seconds to ensure all clients are up!");
-        Thread.sleep(5000);
 
         int clientId = Integer.parseInt(args[0]);
         Configurations configurations = ConfigManager.getClientConfigurations(clientId);
@@ -43,11 +42,37 @@ public class Client {
         }
         int filesSize = files.size();
         String filesInfo = files.stream().map(Object::toString).collect(Collectors.joining(","));
-        System.out.println("Before listening");
         ServerOfClient serverOfClient = new ServerOfClient(filesInfo, server, requestQueues, lamportsClock, requests, path, configurations, votes, clientId, fileQuorums);
         Thread serverThread = new Thread(serverOfClient);
         serverThread.start();
-        System.out.println("After listening");
+
+        System.out.println("Waiting for all servers and clients to be up");
+        for (String serv : servers) {
+            System.out.println("Checking if " + serv + " is up!");
+            while (true) {
+                String ip = serv.split(":")[0];
+                int port = Integer.parseInt(serv.split(":")[1]);
+                if (checkIfAlive(ip, port)) {
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+            System.out.println(serv+" is up!");
+        }
+        for (String client : clients) {
+            System.out.println("Checking if " + client + " is up!");
+            while (true) {
+                String ip = client.split(":")[0];
+                int port = Integer.parseInt(client.split(":")[1]);
+                if (checkIfAlive(ip, port)) {
+                    break;
+                }
+                Thread.sleep(1000);
+            }
+            System.out.println(client + " is up!");
+        }
+        System.out.println("All clients are up!");
+
         for (int i = 0; i < 20; i++) {
             int randomIndex = new Random().nextInt((filesSize));
             int randomCityIndex = new Random().nextInt(cities.size() - 1);
@@ -57,7 +82,8 @@ public class Client {
             ObtainBothQuorum obtainBothQuorum = new ObtainBothQuorum(msg, clients, lamportsClock.clockValue, quorum);
             obtainBothQuorum.obtain();
             if (quorum.vote1 && quorum.vote2) {
-                System.out.println("Obtained locks, proceed to 2 PL");
+                System.out.println("Obtained locks, proceeding to two phase locking protocol");
+
             }
         }
     }
@@ -69,4 +95,12 @@ public class Client {
         lamportsClock.clockValue = Math.max(val, lamportsClock.clockValue);
     }
 
+    private static boolean checkIfAlive(String server, int port) {
+        try {
+            Socket socket = new Socket(server, port);
+            return true;
+        } catch (IOException e) {
+            return false;
+        }
+    }
 }
