@@ -29,7 +29,7 @@ public class ObtainQuorum implements Runnable {
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             dataOutputStream.writeInt(msg.length());
-            dataOutputStream.writeLong(lamportsClock);
+            dataOutputStream.writeInt((int)lamportsClock);
             dataOutputStream.writeBytes(msg);
 
             while (true) {
