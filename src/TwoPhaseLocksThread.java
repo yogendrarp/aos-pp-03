@@ -31,11 +31,15 @@ public class TwoPhaseLocksThread implements Runnable {
         try (Socket socket = new Socket(_server, port)) {
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
+            System.out.println("Sending msg " + msg + "to " + server + " at port" + port);
             dataOutputStream.writeInt(msg.length());
             dataOutputStream.writeBytes(msg);
             int responseLength = in.readInt();
+            System.out.println("Length of first response is " + responseLength);
             if (responseLength > 0) {
                 byte[] responseBytes = new byte[responseLength];
+                in.readFully(responseBytes);
+                System.out.println("First response is " + new String(responseBytes));
                 if (new String(responseBytes).equals("ABORT")) {
                     System.out.println("Recieved abort");
                     status[myIdx] = '1';
@@ -47,7 +51,7 @@ public class TwoPhaseLocksThread implements Runnable {
                         System.out.println("Waiting to recieve other commits");
                     }
                     if (status[othIdx1] == '2' && status[othIdx2] == '2') {
-                        System.out.println("Proceeding to commit");
+                        System.out.println("******************Proceeding to commit to all servers*****************");
                         String comMsg = "COMMIT";
                         dataOutputStream.writeInt(comMsg.length());
                         dataOutputStream.writeBytes(comMsg);

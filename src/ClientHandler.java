@@ -34,7 +34,7 @@ public class ClientHandler implements Runnable {
                 String city = tokens[3];
                 String formedMsg = clientId + ", " + lamportsClock + ", " + city;
                 System.out.println("Random number generated is" + randomNumber);
-                if (randomNumber < 5) {
+                if (randomNumber < 2) {
                     System.out.println("Request will be aborted");
                     String _reJMessg = "ABORT";
                     out.writeInt(_reJMessg.length());
@@ -48,6 +48,7 @@ public class ClientHandler implements Runnable {
                     length = in.readInt();
                     if (length > 0) {
                         line = new byte[length];
+                        in.readFully(line);
                         System.out.println("Msg obtained " + new String(line));
                         //Check if commit else abort
                         if (new String(line).equals("COMMIT")) {
