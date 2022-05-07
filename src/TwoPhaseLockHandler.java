@@ -17,11 +17,11 @@ public class TwoPhaseLockHandler {
     public void run() throws InterruptedException {
         TwoPhaseLocksThread _serverPhase1 = new TwoPhaseLocksThread(servers[0], msg, fileName, status, 0, 1, 2);
         TwoPhaseLocksThread _serverPhase2 = new TwoPhaseLocksThread(servers[1], msg, fileName, status, 1, 0, 2);
-        TwoPhaseLocksThread _serverPhase3 = new TwoPhaseLocksThread(servers[1], msg, fileName, status, 2, 0, 1);
+        TwoPhaseLocksThread _serverPhase3 = new TwoPhaseLocksThread(servers[2], msg, fileName, status, 2, 0, 1);
         Thread _serverThread1 = new Thread(_serverPhase1);
         Thread _serverThread2 = new Thread(_serverPhase2);
         Thread _serverThread3 = new Thread(_serverPhase3);
-
+        System.out.println("Initiating 2 phase Locks");
         _serverThread1.start();
         _serverThread2.start();
         _serverThread3.start();
@@ -30,6 +30,6 @@ public class TwoPhaseLockHandler {
         _serverThread2.join();
         _serverThread3.join();
 
-        System.out.println("The msg has been written on all replicas");
+        System.out.println("The msg has been written/aborted on all replicas accordingly");
     }
 }
