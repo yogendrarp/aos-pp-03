@@ -53,21 +53,21 @@ public class ConfigManager {
                 serverConfigurations.prodServerPort = 6000;
                 serverConfigurations.devServerIp = "localhost";
                 serverConfigurations.devServerPort = 6001;
-                serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server1";
+                serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server1\\";
                 break;
             case 2:
                 serverConfigurations.prodServerIp = "dc02.utdallas.edu";
                 serverConfigurations.prodServerPort = 6000;
                 serverConfigurations.devServerIp = "localhost";
                 serverConfigurations.devServerPort = 6002;
-                serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server2";
+                serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server2\\";
                 break;
             case 3:
                 serverConfigurations.prodServerIp = "dc03.utdallas.edu";
                 serverConfigurations.prodServerPort = 6000;
                 serverConfigurations.devServerIp = "localhost";
                 serverConfigurations.devServerPort = 6003;
-                serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server3";
+                serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server3\\";
                 break;
         }
         return serverConfigurations;

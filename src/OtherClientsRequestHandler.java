@@ -43,7 +43,7 @@ public class OtherClientsRequestHandler implements Runnable {
             in = new DataInputStream(clientSocket.getInputStream());
             int length = 0;
             length = in.readInt();
-            long clock = in.readLong();
+            long clock = in.readInt();
             byte[] line = new byte[length];
             if (length > 0) {
                 in.readFully(line);
@@ -59,7 +59,7 @@ public class OtherClientsRequestHandler implements Runnable {
                 if (msgType.equals("ENQUIRY") && votes[number - 1] == '0') {
                     System.out.println("Giving vote");
                     votes[number - 1] = clientIdChar;
-                    out.writeLong(5);
+                    out.writeInt(5);
                     out.writeBytes("REPLY");
                 } else {
                     //Send yield message to who you have voted
@@ -70,10 +70,10 @@ public class OtherClientsRequestHandler implements Runnable {
                         DataOutputStream outSendYield = new DataOutputStream(yieldSocket.getOutputStream());
                         DataInputStream inSendYield = new DataInputStream(yieldSocket.getInputStream());
                         String yieldMsg = "YIELD#" + clientId + "#" + fileName;
-                        outSendYield.writeLong(yieldMsg.length());
+                        outSendYield.writeInt(yieldMsg.length());
                         outSendYield.writeBytes(yieldMsg);
                         Thread.sleep(2000);
-                        out.writeLong(5);
+                        out.writeInt(5);
                         out.writeBytes("REPLY");
                     } catch (Exception e) {
                     }

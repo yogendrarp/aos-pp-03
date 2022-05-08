@@ -2,3 +2,6 @@
 0, 0, Hokaido
 0, 0, Hiroshima
 0, 0, Nagasaki
+2, 0, Somerville
+3, 0, Edgecliff Village
+5, 0, Lefors

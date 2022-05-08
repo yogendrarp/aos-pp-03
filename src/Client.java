@@ -57,7 +57,7 @@ public class Client {
                 }
                 Thread.sleep(1000);
             }
-            System.out.println(serv+" is up!");
+            System.out.println(serv + " is up!");
         }
         for (String client : clients) {
             System.out.println("Checking if " + client + " is up!");
@@ -73,18 +73,26 @@ public class Client {
         }
         System.out.println("All clients are up!");
 
+       /* if (clientId > 1) {
+            return;
+        }*/
+
         for (int i = 0; i < 20; i++) {
             int randomIndex = new Random().nextInt((filesSize));
             int randomCityIndex = new Random().nextInt(cities.size() - 1);
             String randomCity = cities.get(randomCityIndex);
             String msg = "ENQUIRE#" + clientId + "#" + files.get(randomIndex);
+            String _wmsg = clientId + "#" + files.get(randomIndex) + "#" + lamportsClock.clockValue + "#" + randomCity;
             Quorum quorum = fileQuorums.get(randomIndex);
             ObtainBothQuorum obtainBothQuorum = new ObtainBothQuorum(msg, clients, lamportsClock.clockValue, quorum);
             obtainBothQuorum.obtain();
             if (quorum.vote1 && quorum.vote2) {
                 System.out.println("Obtained locks, proceeding to two phase locking protocol");
-
+                TwoPhaseLockHandler _twoPhaseLockHandler = new TwoPhaseLockHandler(servers, files.get(randomIndex), _wmsg);
+                _twoPhaseLockHandler.run();
             }
+
+            Thread.sleep(new Random().nextInt(4) * 1000);
         }
     }
 

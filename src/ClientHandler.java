@@ -21,27 +21,42 @@ public class ClientHandler implements Runnable {
             in = new DataInputStream(clientSocket.getInputStream());
             int length = 0;
             length = in.readInt();
-            long clock = in.readLong();
             Random random = new Random();
             int randomNumber = random.nextInt((20 - 5) + 1) + 1;
             byte[] line = new byte[length];
             if (length > 0) {
                 in.readFully(line);
-                System.out.println(new String(line));
-                if (randomNumber < 5) {
+                System.out.println("Msg recieved is : " + new String(line));
+                String[] tokens = new String(line).split("#");
+                String clientId = tokens[0];
+                String fileName = tokens[1];
+                String lamportsClock = tokens[2];
+                String city = tokens[3];
+                String formedMsg = clientId + ", " + lamportsClock + ", " + city;
+                System.out.println("Random number generated is" + randomNumber);
+                if (randomNumber < 2) {
+                    System.out.println("Request will be aborted");
                     String _reJMessg = "ABORT";
-                    out.writeLong(_reJMessg.length());
+                    out.writeInt(_reJMessg.length());
                     out.writeBytes(_reJMessg);
-
                 } else {
+                    System.out.println("Request will be committed");
                     String _comMessg = "COMMIT";
-                    out.writeLong(_comMessg.length());
+                    out.writeInt(_comMessg.length());
                     out.writeBytes(_comMessg);
                     length = 0;
                     length = in.readInt();
                     if (length > 0) {
                         line = new byte[length];
-                        FileWriter.AppendToFile(path, new String(line));
+                        in.readFully(line);
+                        System.out.println("Msg obtained " + new String(line));
+                        //Check if commit else abort
+                        if (new String(line).equals("COMMIT")) {
+                            System.out.println(path + " " + fileName + " " + formedMsg);
+                            FileWriter.AppendToFile(path + fileName, formedMsg);
+                        } else {
+                            System.out.println("Aborting Requests!");
+                        }
                     }
 
                 }

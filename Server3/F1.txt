@@ -2,3 +2,9 @@
 0, 0, Austin
 0, 0, San Antonio
 0, 0, Houston
+2, 0, Oak Ridge
+4, 0, Port Mansfield
+5, 0, Lolita
+5, 0, Sabinal
+4, 0, Garland
+2, 0, Tilden
