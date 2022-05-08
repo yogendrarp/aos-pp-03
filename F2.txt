@@ -2,7 +2,3 @@
 0, 0, San Jose
 0, 0, Palo Alto
 0, 0, Santa Cruz
-1, 0, Palmhurst
-1, 0, Pearsall
-2, 0, Omaha
-2, 0, Lincoln Park

@@ -2,4 +2,3 @@
 0, 0, Vienna
 0, 0, Budapest
 0, 0, Berlin
-3, 0, Stephenville

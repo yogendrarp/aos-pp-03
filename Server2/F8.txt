@@ -2,3 +2,8 @@
 0, 0, Vienna
 0, 0, Budapest
 0, 0, Berlin
+4, 0, Crane
+5, 0, Del Sol
+5, 0, White Oak
+3, 0, Stephenville
+3, 0, Nome

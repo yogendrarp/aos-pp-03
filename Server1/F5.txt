@@ -1,3 +1,6 @@
 0, 0, Beijing
 0, 0, Shangai
 0, 0, Wuhan
+5, 0, Los Alvarez
+3, 0, Ranger
+3, 0, Red Lick

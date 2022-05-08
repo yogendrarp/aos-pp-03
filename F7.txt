@@ -2,5 +2,3 @@
 0, 0, Austin
 0, 0, San Antonio
 0, 0, Houston
-2, 0, Brushy Creek
-2, 0, La Presa

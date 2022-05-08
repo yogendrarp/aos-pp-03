@@ -2,5 +2,3 @@
 0, 0, Albany
 0, 0, Rochester
 0, 0, Buffalo
-2, 0, Camp Wood
-1, 0, Hebbronville

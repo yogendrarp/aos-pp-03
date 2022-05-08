@@ -2,3 +2,6 @@
 0, 0, Austin
 0, 0, San Antonio
 0, 0, Houston
+1, 0, Dawson
+2, 0, Brushy Creek
+4, 0, Seadrift

@@ -73,6 +73,10 @@ public class Client {
         }
         System.out.println("All clients are up!");
 
+       /* if (clientId > 1) {
+            return;
+        }*/
+
         for (int i = 0; i < 20; i++) {
             int randomIndex = new Random().nextInt((filesSize));
             int randomCityIndex = new Random().nextInt(cities.size() - 1);
@@ -87,6 +91,8 @@ public class Client {
                 TwoPhaseLockHandler _twoPhaseLockHandler = new TwoPhaseLockHandler(servers, files.get(randomIndex), _wmsg);
                 _twoPhaseLockHandler.run();
             }
+
+            Thread.sleep(new Random().nextInt(4) * 1000);
         }
     }
 

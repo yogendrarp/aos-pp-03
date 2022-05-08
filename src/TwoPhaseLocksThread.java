@@ -43,19 +43,23 @@ public class TwoPhaseLocksThread implements Runnable {
                 if (new String(responseBytes).equals("ABORT")) {
                     System.out.println("Recieved abort");
                     status[myIdx] = '1';
+                    System.out.println("#1. myidx: " + status[myIdx] + ", other1: " + status[othIdx1] + ", other2: " + status[othIdx2]);
                 } else if (new String(responseBytes).equals("COMMIT")) {
                     System.out.println("Recieved commit");
                     status[myIdx] = '2';
+                    System.out.println("#2. myidx: " + status[myIdx] + ", other1: " + status[othIdx1] + ", other2: " + status[othIdx2]);
                     while (status[othIdx1] == 0 || status[othIdx2] == 0) {
                         //Wait Lock do nothing
                         System.out.println("Waiting to recieve other commits");
                     }
                     if (status[othIdx1] == '2' && status[othIdx2] == '2') {
+                        System.out.println("#3. myidx: " + status[myIdx] + ", other1: " + status[othIdx1] + ", other2: " + status[othIdx2]);
                         System.out.println("******************Proceeding to commit to all servers*****************");
                         String comMsg = "COMMIT";
                         dataOutputStream.writeInt(comMsg.length());
                         dataOutputStream.writeBytes(comMsg);
                     } else {
+                        System.out.println("#4. myidx: " + status[myIdx] + ", other1: " + status[othIdx1] + ", other2: " + status[othIdx2]);
                         System.out.println("Proceeding to abort");
                         String abortMsg = "ABORT";
                         dataOutputStream.writeInt(abortMsg.length());
