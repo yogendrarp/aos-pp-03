@@ -1,6 +1,12 @@
 0, 0, Beijing
 0, 0, Shangai
 0, 0, Wuhan
-5, 0, Los Alvarez
-3, 0, Ranger
-3, 0, Red Lick
+4, 0, Mobeetie
+5, 1, Claude
+1, 5, Poteet
+1, 10, Beaumont
+1, 11, Highlands
+4, 16, Pecan Grove
+4, 17, Selma
+3, 16, Kyle
+3, 17, Tira

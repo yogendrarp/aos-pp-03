@@ -84,7 +84,7 @@ public class Client {
             String msg = "ENQUIRE#" + clientId + "#" + files.get(randomIndex);
             String _wmsg = clientId + "#" + files.get(randomIndex) + "#" + lamportsClock.clockValue + "#" + randomCity;
             Quorum quorum = fileQuorums.get(randomIndex);
-            ObtainBothQuorum obtainBothQuorum = new ObtainBothQuorum(msg, clients, lamportsClock.clockValue, quorum);
+            ObtainBothQuorum obtainBothQuorum = new ObtainBothQuorum(msg, clients, lamportsClock.clockValue++, quorum);
             obtainBothQuorum.obtain();
             if (quorum.vote1 && quorum.vote2) {
                 System.out.println("Obtained locks, proceeding to two phase locking protocol");

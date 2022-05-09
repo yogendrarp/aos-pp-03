@@ -2,5 +2,10 @@
 0, 0, Albany
 0, 0, Rochester
 0, 0, Buffalo
-2, 0, Camp Wood
-1, 0, Hebbronville
+3, 6, Arp
+1, 6, Euless
+1, 9, Murchison
+5, 10, Euless
+2, 13, Highlands
+1, 14, Eldorado
+2, 17, Ferris

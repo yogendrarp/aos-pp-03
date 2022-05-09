@@ -48,6 +48,7 @@ public class TwoPhaseLocksThread implements Runnable {
                     System.out.println("Recieved commit");
                     status[myIdx] = '2';
                     System.out.println("#2. myidx: " + status[myIdx] + ", other1: " + status[othIdx1] + ", other2: " + status[othIdx2]);
+                    Thread.sleep(2000);
                     while (status[othIdx1] == 0 || status[othIdx2] == 0) {
                         //Wait Lock do nothing
                         System.out.println("Waiting to recieve other commits");
@@ -67,7 +68,7 @@ public class TwoPhaseLocksThread implements Runnable {
                     }
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             System.out.println(e.getMessage());
         } finally {
             try {
