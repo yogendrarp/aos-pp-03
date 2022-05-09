@@ -2,4 +2,13 @@
 0, 0, Hokaido
 0, 0, Hiroshima
 0, 0, Nagasaki
-5, 0, Lefors
+4, 1, San Juan
+2, 1, Lometa
+4, 3, Wellington
+2, 5, Elmendorf
+4, 7, Toco
+5, 6, Dayton
+5, 11, Amherst
+4, 15, Hawkins
+2, 14, Westbrook
+5, 19, Winona

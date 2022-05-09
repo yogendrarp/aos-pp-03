@@ -2,11 +2,17 @@
 0, 0, Austin
 0, 0, San Antonio
 0, 0, Houston
-2, 0, Oak Ridge
-4, 0, Port Mansfield
-5, 0, Lolita
-4, 0, Solis
-5, 0, East Alto Bonito
-4, 0, Garland
-5, 0, Santa Anna
-2, 0, Tilden
+2, 2, North Cleveland
+5, 2, Bells
+1, 4, Goree
+5, 4, Shavano Park
+4, 6, Little River-Academy
+4, 8, Tioga
+3, 8, Chester
+5, 7, Everman
+3, 9, Leander
+2, 10, China
+3, 13, Callisburg
+1, 13, Appleby
+5, 18, Mobile City
+2, 18, Temple

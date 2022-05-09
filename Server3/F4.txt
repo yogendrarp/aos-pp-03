@@ -2,4 +2,16 @@
 0, 0, Bangalore
 0, 0, Mumbai
 0, 0, Hyderabad
-5, 0, Cross Timber
+3, 0, The Colony
+4, 2, White Oak
+5, 3, Gun Barrel City
+4, 5, Amarillo
+3, 5, Garden City
+3, 7, O'Donnell
+3, 11, Lacy-Lakeview
+1, 12, Old River-Winfree
+5, 14, LaCoste
+3, 15, Sealy
+5, 15, Hidalgo
+3, 19, Loma Linda East
+2, 19, Alvord
