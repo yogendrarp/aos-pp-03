@@ -46,7 +46,7 @@ public class ConfigManager {
 
     static ServerConfigurations getServerConfiguration(int serverId) {
         ServerConfigurations serverConfigurations = new ServerConfigurations();
-        serverConfigurations.serverPath="";
+
         switch (serverId) {
             case 1:
                 serverConfigurations.prodServerIp = "dc01.utdallas.edu";
@@ -54,6 +54,7 @@ public class ConfigManager {
                 serverConfigurations.devServerIp = "localhost";
                 serverConfigurations.devServerPort = 6001;
                 serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server1\\";
+                serverConfigurations.prodPath="/home/012/y/yr/yrp200001/aospp3/Server1/";
                 break;
             case 2:
                 serverConfigurations.prodServerIp = "dc02.utdallas.edu";
@@ -61,6 +62,7 @@ public class ConfigManager {
                 serverConfigurations.devServerIp = "localhost";
                 serverConfigurations.devServerPort = 6002;
                 serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server2\\";
+                serverConfigurations.prodPath="/home/012/y/yr/yrp200001/aospp3/Server2/";
                 break;
             case 3:
                 serverConfigurations.prodServerIp = "dc03.utdallas.edu";
@@ -68,6 +70,7 @@ public class ConfigManager {
                 serverConfigurations.devServerIp = "localhost";
                 serverConfigurations.devServerPort = 6003;
                 serverConfigurations.devPath="D:\\Code\\aos-pp-03\\Server3\\";
+                serverConfigurations.prodPath="/home/012/y/yr/yrp200001/aospp3/Server3/";
                 break;
         }
         return serverConfigurations;

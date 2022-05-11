@@ -32,8 +32,8 @@ public class Client {
         int clientId = Integer.parseInt(args[0]);
         Configurations configurations = ConfigManager.getClientConfigurations(clientId);
 
-        servers = configurations.devServers;
-        clients = configurations.devClients;
+        servers = configurations.prodServers;
+        clients = configurations.prodClients;
 
         List<String> cities = Files.readAllLines(Paths.get(path + citiesFile));
         for (int i = 0; i < files.size(); i++) {
