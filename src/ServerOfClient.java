@@ -36,8 +36,8 @@ public class ServerOfClient implements Runnable {
 
     public void run() {
         try {
-            server = new ServerSocket(configurations.myPort);
-            System.out.println("Client 1 listens for requests on " + configurations.myPort);
+            server = new ServerSocket(configurations.prodPort);
+            System.out.println("Client 1 listens for requests on " + configurations.prodPort);
             server.setReuseAddress(true);
             while (true) {
                 Socket client = server.accept();

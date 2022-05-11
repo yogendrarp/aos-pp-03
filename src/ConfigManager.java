@@ -3,6 +3,7 @@ public class ConfigManager {
         Configurations configurations = new Configurations();
         configurations.allDevClients = new String[]{"localhost:5001", "localhost:5002", "localhost:5003", "localhost:5004", "localhost:5005"};
         configurations.allProdClients = new String[]{"dc01.utdallas.edu:5000", "dc02.utdallas.edu:5000", "dc03.utdallas.edu:5000", "dc04.utdallas.edu:5000", "dc05.utdallas.edu:5000"};
+        configurations.prodPort=5000;
         switch (id) {
             case 1:
                 configurations.devClients = new String[]{"localhost:5002", "localhost:5003"};
