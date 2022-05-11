@@ -11,12 +11,12 @@ public class ObtainQuorum implements Runnable {
     int idx;
 
 
-    public ObtainQuorum(String msg, String server, long lamportsClock, Quorum quorum,int index) {
+    public ObtainQuorum(String msg, String server, long lamportsClock, Quorum quorum, int index) {
         this.msg = msg;
         this.server = server;
         this.lamportsClock = lamportsClock;
         this.quorum = quorum;
-        this.idx=index;
+        this.idx = index;
     }
 
     @Override
@@ -29,9 +29,7 @@ public class ObtainQuorum implements Runnable {
             dataOutputStream = new DataOutputStream(socket.getOutputStream());
             in = new DataInputStream(socket.getInputStream());
             dataOutputStream.writeInt(msg.length());
-            dataOutputStream.writeInt((int)lamportsClock);
             dataOutputStream.writeBytes(msg);
-
             while (true) {
                 /**
                  *Connect to one of the servers and inform that it has to write
@@ -44,10 +42,10 @@ public class ObtainQuorum implements Runnable {
                     in.readFully(successMsg);
                     System.out.println(new String(successMsg));
                     System.out.println("Obtained lock from" + server + " " + port);
-                    if(idx==0)
-                        quorum.vote1=true;
-                    if(idx==1)
-                        quorum.vote2=true;
+                    if (idx == 0)
+                        quorum.vote1 = true;
+                    if (idx == 1)
+                        quorum.vote2 = true;
                     break;
                 }
             }
