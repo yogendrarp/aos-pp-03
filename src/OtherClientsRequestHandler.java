@@ -43,11 +43,9 @@ public class OtherClientsRequestHandler implements Runnable {
             in = new DataInputStream(clientSocket.getInputStream());
             int length = 0;
             length = in.readInt();
-            long clock = in.readInt();
             byte[] line = new byte[length];
             if (length > 0) {
                 in.readFully(line);
-                System.out.println(new String(line));
                 String[] messageTokens = new String(line).split("#");
                 String msgType = messageTokens[0];
                 String _sclientId = messageTokens[1];
@@ -63,7 +61,7 @@ public class OtherClientsRequestHandler implements Runnable {
                     out.writeBytes("REPLY");
                 } else {
                     //Send yield message to who you have voted
-                    String clientInfo = configurations.allDevClients[clientIdx - 1];
+                    String clientInfo = configurations.allProdClients[clientIdx - 1];
                     String server = clientInfo.split(":")[0];
                     int port = Integer.parseInt(clientInfo.split(":")[1]);
                     try (Socket yieldSocket = new Socket(server, port)) {
@@ -92,7 +90,7 @@ public class OtherClientsRequestHandler implements Runnable {
                 }
             }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+
         } finally {
             try {
                 in.close();

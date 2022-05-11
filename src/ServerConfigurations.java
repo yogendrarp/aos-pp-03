@@ -3,6 +3,6 @@ public class ServerConfigurations {
     String devServerIp;
     int prodServerPort;
     int devServerPort;
-    String serverPath;
+    String prodPath;
     String devPath;
 }
