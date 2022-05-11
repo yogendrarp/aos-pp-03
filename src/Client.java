@@ -14,7 +14,7 @@ public class Client {
     static ArrayList<Quorum> fileQuorums = new ArrayList<Quorum>();
     static HashSet<String> requests = new HashSet<>();
     static String citiesFile = "citiestexas.txt";
-    static String path = "D:\\Code\\aos-pp-03\\";
+    static String path = "/home/012/y/yr/yrp200001/aospp3";
     static ArrayList<PriorityQueue<Message>> requestQueues = new ArrayList<PriorityQueue<Message>>();
     static LamportsClock lamportsClock = new LamportsClock();
 
